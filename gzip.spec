@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.3
-Release: 13
+Release: 14
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -12,6 +12,7 @@ Patch3: gzip-1.3-stderr.patch
 Patch4: gzip-1.3.1-zgreppipe.patch
 Patch5: gzip-1.3-rsync.patch
 Patch6: gzip-1.3.3-window-size.patch
+Patch7: gzip-1.3.3-addsuffix.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -33,6 +34,7 @@ very commonly used data compression program.
 %patch4 -p1 -b .nixi
 %patch5 -p1 -b .rsync
 %patch6 -p1 -b .window-size
+%patch7 -p1 -b .addsuffix
 
 %build
 export DEFS="-DNO_ASM"
@@ -85,6 +87,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Mon Dec 13 2004 Ivana Varekova <varekova@redhat.com>
+- fix bug #106551 problem with zmore which requires the suffix .gz in file name
+
 * Tue Jun 15 2004 Elliot Lee <sopwith@redhat.com>
 - rebuilt
 
