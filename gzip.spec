@@ -1,18 +1,18 @@
 Summary: The GNU data compression program.
 Name: gzip
-Version: 1.3.3
-Release: 16
+Version: 1.3.5
+Release: 1
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
-Patch0: gzip-1.3-openbsd-owl-tmp.diff
-Patch1: gzip-1.2.4-zforce.patch
-Patch2: gzip-1.2.4a-dirinfo.patch
-Patch3: gzip-1.3-stderr.patch
+Patch0: gzip-1.3.5-openbsd-owl-tmp.patch
+Patch1: gzip-1.3.5-zforce.patch
+Patch3: gzip-1.3.5-stderr.patch
 Patch4: gzip-1.3.1-zgreppipe.patch
 Patch5: gzip-1.3-rsync.patch
 Patch6: gzip-1.3.3-window-size.patch
 Patch7: gzip-1.3.3-addsuffix.patch
+Patch8: gzip-1.3.5-zgrep-sed.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -27,14 +27,14 @@ very commonly used data compression program.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1 
-#patch2 -p1 
-%patch3 -p1
+%patch0 -p1 -b .owl-tmp
+%patch1 -p1 -b .zforce
+%patch3 -p1 -b .stderr
 %patch4 -p1 -b .nixi
 %patch5 -p1 -b .rsync
 %patch6 -p1 -b .window-size
 %patch7 -p1 -b .addsuffix
+%patch8 -p0 -b .sed
 
 %build
 export DEFS="-DNO_ASM"
@@ -56,13 +56,6 @@ for i in  zcmp zegrep zforce zless znew gzexe zdiff zfgrep zgrep zmore ; do
 done
 
 gzip -9nf ${RPM_BUILD_ROOT}%{_infodir}/gzip.info*
-
-
-cat > ${RPM_BUILD_ROOT}%{_bindir}/zless <<EOF
-#!/bin/sh
-/bin/zcat "\$@" | /usr/bin/less
-EOF
-chmod 755 ${RPM_BUILD_ROOT}%{_bindir}/zless
 
 # we don't ship it, so let's remove it from ${RPM_BUILD_ROOT}
 rm -f ${RPM_BUILD_ROOT}%{_infodir}/dir
@@ -87,6 +80,11 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Mar 22 2005 Tomas Mraz <tmraz@redhat.com> 1.3.5-1
+- upstream 1.3.5
+- dropped long ago obsolete dirinfo patch
+- escape file names in zgrep (#123012)
+
 * Fri Mar 04 2005 Jiri Ryska <jryska@redhat.com>
 - rebuilt
 
