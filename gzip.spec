@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 2
+Release: 3
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -13,7 +13,6 @@ Patch5: gzip-1.3-rsync.patch
 Patch6: gzip-1.3.3-window-size.patch
 Patch7: gzip-1.3.3-addsuffix.patch
 Patch8: gzip-1.3.5-zgrep-sed.patch
-Patch9: gzip-1.3.5-asm-execstack.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -36,10 +35,9 @@ very commonly used data compression program.
 %patch6 -p1 -b .window-size
 %patch7 -p1 -b .addsuffix
 %patch8 -p0 -b .sed
-%patch9 -p1 -b .execstack
 
 %build
-export DEFS="-DNO_ASM"
+export DEFS="NO_ASM"
 export CPPFLAGS="-DHAVE_LSTAT"
 %configure  --bindir=/bin
 
@@ -82,6 +80,10 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Wed Mar 23 2005 Tomas Mraz <tmraz@redhat.com> 1.3.5-3
+- don't use the asm code again as it's slower than the gcc compiled one
+- convert the .spec to UTF-8
+
 * Tue Mar 22 2005 Tomas Mraz <tmraz@redhat.com> 1.3.5-2
 - upstream 1.3.5
 - dropped long ago obsolete dirinfo patch
@@ -126,22 +128,22 @@ fi
 * Fri Jun 21 2002 Tim Powers <timp@redhat.com>
 - automated rebuild
 
-* Fri Jun 21 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.3-4
+* Fri Jun 21 2002 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 1.3.3-4
 - Fix the reading of unitialized memory problem (#66913)
 
 * Thu May 23 2002 Tim Powers <timp@redhat.com>
 - automated rebuild
 
-* Thu Apr 25 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.3-2
+* Thu Apr 25 2002 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 1.3.3-2
 - Rebuild
 
-* Wed Mar 13 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.3-1
+* Wed Mar 13 2002 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 1.3.3-1
 - 1.3.3
 
 * Sun Mar 10 2002 Florian La Roche <Florian.LaRoche@redhat.de>
 - add rsyncable patch #58888
 
-* Thu Feb 21 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.2-3
+* Thu Feb 21 2002 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 1.3.2-3
 - Rebuild
 
 * Wed Jan 09 2002 Tim Powers <timp@redhat.com>
@@ -154,57 +156,57 @@ fi
 - update to 1.3.1:
 	- disable patch2
 
-* Fri Oct 26 2001 Trond Eivind Glomsrød <teg@redhat.com> 1.3.0-16
+* Fri Oct 26 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 1.3.0-16
 - replace tempfile patches with improved ones solar@openwall.com
 - Add less to the dependency chain - zless needs it
 
-* Thu Aug 23 2001 Trond Eivind Glomsrød <teg@redhat.com> 1.3.0-15
+* Thu Aug 23 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 1.3.0-15
 - Fix typo in comment in zgrep (#52465) 
 - Copyright -> License
 
-* Tue Jun  5 2001 Trond Eivind Glomsrød <teg@redhat.com>
+* Tue Jun  5 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - Patch various uses of $$ in the bundled scripts
 
-* Mon Jun  4 2001 Trond Eivind Glomsrød <teg@redhat.com>
+* Mon Jun  4 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - Fix the SIGPIPE patch to avoid blank lines (#43319)
 
 * Thu Feb 08 2001 Philipp Knirsch <pknirsch@redhat.de>
 - Fixed buzilla bug #26680. Wrong skip value after mktemp patch and forced
   overwrite for output file during decompression.
 
-* Tue Jan 30 2001 Trond Eivind Glomsrød <teg@redhat.com>
+* Tue Jan 30 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - trap SIGPIPE in zgrep, so "zgrep | less" gets a happy ending
   (#24104)
 
-* Sun Dec 10 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Sun Dec 10 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - add HAVE_LSTAT define, to avoid it doing weird things to symlinks
   instead of ignoring them as the docs say it should (#22045)
 
-* Fri Dec 01 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Fri Dec 01 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - rebuild
 
-* Thu Nov 09 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Thu Nov 09 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - patch all scripts so usage error messages are written to 
   stderr (#20597)
 
-* Mon Oct 30 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Mon Oct 30 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - disable assembly, as it is faster without it (bug #19910)
 
 * Thu Jul 13 2000 Prospector <bugzilla@redhat.com>
 - automatic rebuild
 
-* Tue Jun 27 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Tue Jun 27 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - rebuild
 
-* Wed Jun 07 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Wed Jun 07 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - Use %%{_mandir}, %%{_infodir},  %%configure, %%makeinstall
   and %%{_tmppath}
 
-* Fri May 12 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Fri May 12 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - Add root as default owner of the files, permits building 
   as non-root user
 
-* Wed May 10 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Wed May 10 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - Build system handles stripping
 - Don't do thing the system does, like creating directories
 - use --bindir /bin
