@@ -1,13 +1,15 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3
-Release: 6
+Release: 12
 Copyright: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
-Patch2: gzip-1.3-mktemp.patch
-Patch3: gzip-1.2.4-zforce.patch
-Patch5: gzip-1.2.4a-dirinfo.patch
+Patch0: gzip-1.3-mktemp.patch
+Patch1: gzip-1.2.4-zforce.patch
+Patch2: gzip-1.2.4a-dirinfo.patch
+Patch3: gzip-1.3-stderr.patch
+Patch4: gzip-1.3-zgreppipe.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp
@@ -22,11 +24,15 @@ very commonly used data compression program.
 
 %prep
 %setup -q
-%patch2 -p1 -b .mktemp
-%patch3 -p1 -b .zforce
-%patch5 -p1 -b .dirinfo
+%patch0 -p1 
+%patch1 -p1 
+%patch2 -p1 
+%patch3 -p1
+%patch4 -p1
 
 %build
+export DEFS="-DNO_ASM"
+export CPPFLAGS="-DHAVE_LSTAT"
 %configure  --bindir=/bin
 make 
 make gzip.info
@@ -71,6 +77,28 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Thu Feb 08 2001 Philipp Knirsch <pknirsch@redhat.de>
+- Fixed buzilla bug #26680. Wrong skip value after mktemp patch and forced
+  overwrite for output file during decompression.
+
+* Tue Jan 30 2001 Trond Eivind Glomsrød <teg@redhat.com>
+- trap SIGPIPE in zgrep, so "zgrep | less" gets a happy ending
+  (#24104)
+
+* Sun Dec 10 2000 Trond Eivind Glomsrød <teg@redhat.com>
+- add HAVE_LSTAT define, to avoid it doing weird things to symlinks
+  instead of ignoring them as the docs say it should (#22045)
+
+* Fri Dec 01 2000 Trond Eivind Glomsrød <teg@redhat.com>
+- rebuild
+
+* Thu Nov 09 2000 Trond Eivind Glomsrød <teg@redhat.com>
+- patch all scripts so usage error messages are written to 
+  stderr (#20597)
+
+* Mon Oct 30 2000 Trond Eivind Glomsrød <teg@redhat.com>
+- disable assembly, as it is faster without it (bug #19910)
+
 * Thu Jul 13 2000 Prospector <bugzilla@redhat.com>
 - automatic rebuild
 
