@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.3
-Release: 11
+Release: 12
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -85,6 +85,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Feb 13 2004 Elliot Lee <sopwith@redhat.com>
+- rebuilt
+
 * Tue Oct 28 2003 Jeff Johnson <jbj@redhat.com> 1.3.3-11
 - rebuilt.
 
