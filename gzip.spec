@@ -1,10 +1,10 @@
 Summary: The GNU data compression program.
 Name: gzip
-Version: 1.3.2
-Release: 5
+Version: 1.3.3
+Release: 1
 License: GPL
 Group: Applications/File
-Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.bz2
+Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Patch0: gzip-1.3-openbsd-owl-tmp.diff
 Patch1: gzip-1.2.4-zforce.patch
 Patch2: gzip-1.2.4a-dirinfo.patch
@@ -79,6 +79,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Wed Mar 13 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.3-1
+- 1.3.3
+
 * Sun Mar 10 2002 Florian La Roche <Florian.LaRoche@redhat.de>
 - add rsyncable patch #58888
 
