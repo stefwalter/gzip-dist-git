@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 1
+Release: 2
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -13,6 +13,7 @@ Patch5: gzip-1.3-rsync.patch
 Patch6: gzip-1.3.3-window-size.patch
 Patch7: gzip-1.3.3-addsuffix.patch
 Patch8: gzip-1.3.5-zgrep-sed.patch
+Patch9: gzip-1.3.5-asm-execstack.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -35,6 +36,7 @@ very commonly used data compression program.
 %patch6 -p1 -b .window-size
 %patch7 -p1 -b .addsuffix
 %patch8 -p0 -b .sed
+%patch9 -p1 -b .execstack
 
 %build
 export DEFS="-DNO_ASM"
@@ -80,10 +82,11 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
-* Tue Mar 22 2005 Tomas Mraz <tmraz@redhat.com> 1.3.5-1
+* Tue Mar 22 2005 Tomas Mraz <tmraz@redhat.com> 1.3.5-2
 - upstream 1.3.5
 - dropped long ago obsolete dirinfo patch
 - escape file names in zgrep (#123012)
+- make stack in match.S nonexecutable
 
 * Fri Mar 04 2005 Jiri Ryska <jryska@redhat.com>
 - rebuilt
