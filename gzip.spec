@@ -1,8 +1,8 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3
-Release: 14
-Copyright: GPL
+Release: 15
+License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Patch0: gzip-1.3-mktemp.patch
@@ -18,7 +18,7 @@ Buildroot: %{_tmppath}/gzip-%{version}-root
 
 %description
 The gzip package contains the popular GNU gzip data compression
-program.  Gzipped files have a .gz extension.
+program. Gzipped files have a .gz extension.
 
 Gzip should be installed on your Red Hat Linux system, because it is a
 very commonly used data compression program.
@@ -79,6 +79,10 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Thu Aug 23 2001 Trond Eivind Glomsrød <teg@redhat.com> 1.3.0-15
+- Fix typo in comment in zgrep (#52465) 
+- Copyright -> License
+
 * Tue Jun  5 2001 Trond Eivind Glomsrød <teg@redhat.com>
 - Patch various uses of $$ in the bundled scripts
 
