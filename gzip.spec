@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.3
-Release: 9
+Release: 11
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -85,6 +85,12 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Oct 28 2003 Jeff Johnson <jbj@redhat.com> 1.3.3-11
+- rebuilt.
+
+* Wed Jun 04 2003 Elliot Lee <sopwith@redhat.com>
+- rebuilt
+
 * Fri Jan 31 2003 Jeff Johnson <jbj@redhat.com> 1.3.3-9
 - enlarge window buffer to avoid accessing beyond end-of-buffer (#78413,#83095).
 - re-enable rsync ready patch.
