@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3
-Release: 12
+Release: 14
 Copyright: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -10,6 +10,7 @@ Patch1: gzip-1.2.4-zforce.patch
 Patch2: gzip-1.2.4a-dirinfo.patch
 Patch3: gzip-1.3-stderr.patch
 Patch4: gzip-1.3-zgreppipe.patch
+Patch5: gzip-1.3-noppid.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp
@@ -29,6 +30,7 @@ very commonly used data compression program.
 %patch2 -p1 
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 export DEFS="-DNO_ASM"
@@ -77,6 +79,12 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Jun  5 2001 Trond Eivind Glomsrød <teg@redhat.com>
+- Patch various uses of $$ in the bundled scripts
+
+* Mon Jun  4 2001 Trond Eivind Glomsrød <teg@redhat.com>
+- Fix the SIGPIPE patch to avoid blank lines (#43319)
+
 * Thu Feb 08 2001 Philipp Knirsch <pknirsch@redhat.de>
 - Fixed buzilla bug #26680. Wrong skip value after mktemp patch and forced
   overwrite for output file during decompression.
