@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.3
-Release: 1
+Release: 4
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -10,6 +10,7 @@ Patch1: gzip-1.2.4-zforce.patch
 Patch2: gzip-1.2.4a-dirinfo.patch
 Patch3: gzip-1.3-stderr.patch
 Patch4: gzip-1.3.1-zgreppipe.patch
+# Currently disabled - #66913
 Patch5: gzip-1.3-rsync.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
@@ -27,10 +28,10 @@ very commonly used data compression program.
 %setup -q
 %patch0 -p1
 %patch1 -p1 
-#%patch2 -p1 
+#patch2 -p1 
 %patch3 -p1
 %patch4 -p1 -b .nixi
-%patch5 -p1 -b .rsync
+#patch5 -p1 -b .rsync
 
 %build
 export DEFS="-DNO_ASM"
@@ -79,6 +80,15 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Jun 21 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.3-4
+- Fix the reading of unitialized memory problem (#66913)
+
+* Thu May 23 2002 Tim Powers <timp@redhat.com>
+- automated rebuild
+
+* Thu Apr 25 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.3-2
+- Rebuild
+
 * Wed Mar 13 2002 Trond Eivind Glomsrød <teg@redhat.com> 1.3.3-1
 - 1.3.3
 
