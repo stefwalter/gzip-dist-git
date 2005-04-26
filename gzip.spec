@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 3
+Release: 4
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -13,6 +13,7 @@ Patch5: gzip-1.3-rsync.patch
 Patch6: gzip-1.3.3-window-size.patch
 Patch7: gzip-1.3.3-addsuffix.patch
 Patch8: gzip-1.3.5-zgrep-sed.patch
+Patch9: gzip-1.3.5-gzip-perm.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -35,6 +36,7 @@ very commonly used data compression program.
 %patch6 -p1 -b .window-size
 %patch7 -p1 -b .addsuffix
 %patch8 -p0 -b .sed
+%patch9 -p1 -b .perm
 
 %build
 export DEFS="NO_ASM"
@@ -80,6 +82,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Apr 26 2005 Ivana Varekova <varekova@redhat.com> 1.3.5-4
+- fix bug 155746 - CAN-2005-0988 Race condition in gzip (patch9)
+
 * Wed Mar 23 2005 Tomas Mraz <tmraz@redhat.com> 1.3.5-3
 - don't use the asm code again as it's slower than the gcc compiled one
 - convert the .spec to UTF-8
