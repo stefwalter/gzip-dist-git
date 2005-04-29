@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 4
+Release: 5
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -14,6 +14,7 @@ Patch6: gzip-1.3.3-window-size.patch
 Patch7: gzip-1.3.3-addsuffix.patch
 Patch8: gzip-1.3.5-zgrep-sed.patch
 Patch9: gzip-1.3.5-gzip-perm.patch
+Patch10: gzip-1.3.5-gunzip-dir.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -37,6 +38,7 @@ very commonly used data compression program.
 %patch7 -p1 -b .addsuffix
 %patch8 -p0 -b .sed
 %patch9 -p1 -b .perm
+%patch10 -p1 -b .dir
 
 %build
 export DEFS="NO_ASM"
@@ -82,6 +84,10 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Apr 29 2005 Ivana Varekova <varekova@redhat.com> 1.3.5-5
+- fix bug 156269 - CAN-2005-1228 directory traversal bug
+ (using the patch from Ulf Harnhammar)
+
 * Tue Apr 26 2005 Ivana Varekova <varekova@redhat.com> 1.3.5-4
 - fix bug 155746 - CAN-2005-0988 Race condition in gzip (patch9)
 
