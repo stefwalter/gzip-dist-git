@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 6
+Release: 6.1
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -84,6 +84,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Dec 09 2005 Jesse Keating <jkeating@redhat.com>
+- rebuilt
+
 * Mon May 02 2005 Ivana Varekova <varekova@redhat.com> 1.3.5-6
 - rebuilt
 
