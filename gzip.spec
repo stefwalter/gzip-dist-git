@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 6.2.2
+Release: 7
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -18,6 +18,7 @@ Patch10: gzip-1.3.5-gunzip-dir.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
+BuildRequires: texinfo
 Buildroot: %{_tmppath}/gzip-%{version}-root
 
 %description
@@ -84,6 +85,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Jul 14 2006 Karsten Hopp <karsten@redhat.de> 1.3.5-7
+- buildrequire texinfo, otherwise gzip.info will be empty
+
 * Wed Jul 12 2006 Jesse Keating <jkeating@redhat.com> - 1.3.5-6.2.2
 - rebuild
 
