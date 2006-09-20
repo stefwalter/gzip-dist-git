@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 7
+Release: 8
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -15,6 +15,11 @@ Patch7: gzip-1.3.3-addsuffix.patch
 Patch8: gzip-1.3.5-zgrep-sed.patch
 Patch9: gzip-1.3.5-gzip-perm.patch
 Patch10: gzip-1.3.5-gunzip-dir.patch
+Patch11: gzip-1.3.5-cve-2006-4334.patch
+Patch12: gzip-1.3.5-cve-2006-4335.patch
+Patch13: gzip-1.3.5-cve-2006-4336.patch
+Patch14: gzip-1.3.5-cve-2006-4338.patch
+Patch15: gzip-1.3.5-cve-2006-4337.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -40,6 +45,11 @@ very commonly used data compression program.
 %patch8 -p0 -b .sed
 %patch9 -p1 -b .perm
 %patch10 -p1 -b .dir
+%patch11 -p1 -b .4334
+%patch12 -p1 -b .4335
+%patch13 -p1 -b .4336
+%patch14 -p1 -b .4338
+%patch15 -p1 -b .4337
 
 %build
 export DEFS="NO_ASM"
@@ -85,6 +95,14 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Wed Sep 20 2006 Ivana Varekova <varekova@redhat.com> 1.3.5-8
+- fix bug 204676 (patches by Tavis Ormandy)
+  - cve-2006-4334 - null dereference problem
+  - cve-2006-4335 - buffer overflow problem
+  - cve-2006-4336 - buffer underflow problem
+  - cve-2006-4338 - infinite loop problem
+  - cve-2006-4337 - buffer overflow problem
+
 * Fri Jul 14 2006 Karsten Hopp <karsten@redhat.de> 1.3.5-7
 - buildrequire texinfo, otherwise gzip.info will be empty
 
