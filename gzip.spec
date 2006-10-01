@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 8
+Release: 9
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -95,6 +95,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Sun Oct 01 2006 Jesse Keating <jkeating@redhat.com> - 1.3.5-9
+- rebuilt for unwind info generation, broken in gcc-4.1.1-21
+
 * Wed Sep 20 2006 Ivana Varekova <varekova@redhat.com> 1.3.5-8
 - fix bug 204676 (patches by Tavis Ormandy)
   - cve-2006-4334 - null dereference problem
