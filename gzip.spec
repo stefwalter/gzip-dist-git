@@ -1,7 +1,7 @@
 Summary: The GNU data compression program.
 Name: gzip
 Version: 1.3.5
-Release: 10
+Release: 11%{?dist}
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -20,6 +20,7 @@ Patch12: gzip-1.3.5-cve-2006-4335.patch
 Patch13: gzip-1.3.5-cve-2006-4336.patch
 Patch14: gzip-1.3.5-cve-2006-4338.patch
 Patch15: gzip-1.3.5-cve-2006-4337.patch
+Patch16: gzip-1.3.5-cve-2006-4337_len.patch
 URL: http://www.gzip.org/
 Prereq: /sbin/install-info
 Requires: mktemp less
@@ -50,6 +51,7 @@ very commonly used data compression program.
 %patch13 -p1 -b .4336
 %patch14 -p1 -b .4338
 %patch15 -p1 -b .4337
+%patch16 -p1 -b .4337l
 
 %build
 export DEFS="NO_ASM"
@@ -95,6 +97,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Wed Nov 22 2006 Ivana Varekova <varekova@redhat.com> - 1.3.5-11
+- fix too strict uncompress function
+
 * Mon Oct 23 2006 Ivana Varekova <varekova@redhat.com> - 1.3.5-10
 - fix package description (#208924)
 
