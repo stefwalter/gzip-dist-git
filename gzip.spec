@@ -1,28 +1,25 @@
-Summary: The GNU data compression program.
+Summary: The GNU data compression program
 Name: gzip
-Version: 1.3.5
-Release: 11%{?dist}
+Version: 1.3.9
+Release: 1%{?dist}
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
-Patch0: gzip-1.3.5-openbsd-owl-tmp.patch
+Patch0: gzip-1.3.9-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
-Patch3: gzip-1.3.5-stderr.patch
-Patch4: gzip-1.3.1-zgreppipe.patch
-Patch5: gzip-1.3-rsync.patch
+Patch3: gzip-1.3.9-stderr.patch
+Patch4: gzip-1.3.9-zgreppipe.patch
+Patch5: gzip-1.3.9-rsync.patch
 Patch6: gzip-1.3.3-window-size.patch
-Patch7: gzip-1.3.3-addsuffix.patch
-Patch8: gzip-1.3.5-zgrep-sed.patch
-Patch9: gzip-1.3.5-gzip-perm.patch
-Patch10: gzip-1.3.5-gunzip-dir.patch
-Patch11: gzip-1.3.5-cve-2006-4334.patch
+Patch7: gzip-1.3.9-addsuffix.patch
 Patch12: gzip-1.3.5-cve-2006-4335.patch
 Patch13: gzip-1.3.5-cve-2006-4336.patch
 Patch14: gzip-1.3.5-cve-2006-4338.patch
-Patch15: gzip-1.3.5-cve-2006-4337.patch
+Patch15: gzip-1.3.9-cve-2006-4337.patch
 Patch16: gzip-1.3.5-cve-2006-4337_len.patch
+Patch17: gzip-1.3.9-zdiff_arg.patch
 URL: http://www.gzip.org/
-Prereq: /sbin/install-info
+Requires: /sbin/install-info
 Requires: mktemp less
 BuildRequires: texinfo
 Buildroot: %{_tmppath}/gzip-%{version}-root
@@ -43,15 +40,12 @@ very commonly used data compression program.
 %patch5 -p1 -b .rsync
 %patch6 -p1 -b .window-size
 %patch7 -p1 -b .addsuffix
-%patch8 -p0 -b .sed
-%patch9 -p1 -b .perm
-%patch10 -p1 -b .dir
-%patch11 -p1 -b .4334
 %patch12 -p1 -b .4335
 %patch13 -p1 -b .4336
 %patch14 -p1 -b .4338
 %patch15 -p1 -b .4337
 %patch16 -p1 -b .4337l
+%patch17 -p1 -b .arg
 
 %build
 export DEFS="NO_ASM"
@@ -59,7 +53,7 @@ export CPPFLAGS="-DHAVE_LSTAT"
 %configure  --bindir=/bin
 
 make 
-make gzip.info
+#make gzip.info
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
@@ -97,6 +91,10 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Mon Jan 15 2006 Ivana Varekova <varekova@redhat.com> 1.3.9-1
+- rebuild to 1.3.9
+- spec cleanup
+
 * Wed Nov 22 2006 Ivana Varekova <varekova@redhat.com> - 1.3.5-11
 - fix too strict uncompress function
 
@@ -213,7 +211,7 @@ fi
 
 * Sat Nov 17 2001 Florian La Roche <Florian.LaRoche@redhat.de>
 - update to 1.3.1:
-	- disable patch2
+- disable patch2
 
 * Fri Oct 26 2001 Trond Eivind Glomsrød <teg@redhat.com> 1.3.0-16
 - replace tempfile patches with improved ones solar@openwall.com
