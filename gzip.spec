@@ -91,7 +91,7 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
-* Mon Jan 15 2006 Ivana Varekova <varekova@redhat.com> 1.3.9-1
+* Mon Jan 15 2007 Ivana Varekova <varekova@redhat.com> 1.3.9-1
 - rebuild to 1.3.9
 - spec cleanup
 
