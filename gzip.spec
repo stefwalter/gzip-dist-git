@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.9
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -75,11 +75,11 @@ rm -f ${RPM_BUILD_ROOT}%{_infodir}/dir
 rm -rf ${RPM_BUILD_ROOT}
 
 %post
-/sbin/install-info %{_infodir}/gzip.info.gz %{_infodir}/dir 
+/sbin/install-info %{_infodir}/gzip.info.gz %{_infodir}/dir || :
 
 %preun
 if [ $1 = 0 ]; then
-    /sbin/install-info --delete %{_infodir}/gzip.info.gz %{_infodir}/dir
+    /sbin/install-info --delete %{_infodir}/gzip.info.gz %{_infodir}/dir || :
 fi
 
 %files
@@ -91,6 +91,10 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Mon Jan 22 2007 Ivana Varekova <varekova@redhat.com> 1.3.9-2
+- Resolves: 223702
+  fix non-failsafe install-info problem
+
 * Mon Jan 15 2007 Ivana Varekova <varekova@redhat.com> 1.3.9-1
 - rebuild to 1.3.9
 - spec cleanup
