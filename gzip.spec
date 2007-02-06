@@ -1,14 +1,14 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.3.9
-Release: 2%{?dist}
+Version: 1.3.10
+Release: 01%{?dist}
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Patch0: gzip-1.3.9-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch3: gzip-1.3.9-stderr.patch
-Patch4: gzip-1.3.9-zgreppipe.patch
+Patch4: gzip-1.3.10-zgreppipe.patch
 Patch5: gzip-1.3.9-rsync.patch
 Patch6: gzip-1.3.3-window-size.patch
 Patch7: gzip-1.3.9-addsuffix.patch
@@ -17,12 +17,11 @@ Patch13: gzip-1.3.5-cve-2006-4336.patch
 Patch14: gzip-1.3.5-cve-2006-4338.patch
 Patch15: gzip-1.3.9-cve-2006-4337.patch
 Patch16: gzip-1.3.5-cve-2006-4337_len.patch
-Patch17: gzip-1.3.9-zdiff_arg.patch
 URL: http://www.gzip.org/
 Requires: /sbin/install-info
 Requires: mktemp less
 BuildRequires: texinfo
-Buildroot: %{_tmppath}/gzip-%{version}-root
+Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
 The gzip package contains the popular GNU gzip data compression
@@ -45,7 +44,6 @@ very commonly used data compression program.
 %patch14 -p1 -b .4338
 %patch15 -p1 -b .4337
 %patch16 -p1 -b .4337l
-%patch17 -p1 -b .arg
 
 %build
 export DEFS="NO_ASM"
@@ -91,11 +89,16 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
-* Mon Jan 22 2007 Ivana Varekova <varekova@redhat.com> 1.3.9-2
+* Tue Feb  6 2007 Ivana Varekova <varekova@redhat.com> - 1.3.10-1
+- Resolves: 225878
+  update to 1.3.10
+  change BuildRoot
+
+* Mon Jan 22 2007 Ivana Varekova <varekova@redhat.com> - 1.3.9-2
 - Resolves: 223702
   fix non-failsafe install-info problem
 
-* Mon Jan 15 2007 Ivana Varekova <varekova@redhat.com> 1.3.9-1
+* Mon Jan 15 2007 Ivana Varekova <varekova@redhat.com> - 1.3.9-1
 - rebuild to 1.3.9
 - spec cleanup
 
