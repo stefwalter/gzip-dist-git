@@ -1,6 +1,6 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.3.10
+Version: 1.3.11
 Release: 1%{?dist}
 License: GPL
 Group: Applications/File
@@ -68,6 +68,8 @@ gzip -9nf ${RPM_BUILD_ROOT}%{_infodir}/gzip.info*
 
 # we don't ship it, so let's remove it from ${RPM_BUILD_ROOT}
 rm -f ${RPM_BUILD_ROOT}%{_infodir}/dir
+# uncompress is a part of ncompress package
+rm -f ${RPM_BUILD_ROOT}/bin/uncompress
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -89,6 +91,10 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Mon Mar  5 2007 Ivana Varekova <varekova@redhat.com> - 1.3.11-1
+- update to 1.3.11
+  remove uncompress
+
 * Tue Feb  6 2007 Ivana Varekova <varekova@redhat.com> - 1.3.10-1
 - Resolves: 225878
   update to 1.3.10
