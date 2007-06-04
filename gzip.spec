@@ -17,6 +17,7 @@ Patch13: gzip-1.3.5-cve-2006-4336.patch
 Patch14: gzip-1.3.5-cve-2006-4338.patch
 Patch15: gzip-1.3.9-cve-2006-4337.patch
 Patch16: gzip-1.3.5-cve-2006-4337_len.patch
+Patch17: gzip-1.3.12-futimens.patch
 URL: http://www.gzip.org/
 Requires: /sbin/install-info
 Requires: mktemp less
@@ -44,6 +45,7 @@ very commonly used data compression program.
 %patch14 -p1 -b .4338
 %patch15 -p1 -b .4337
 %patch16 -p1 -b .4337l
+%patch17 -p1 -b .futimens
 
 %build
 export DEFS="NO_ASM"
