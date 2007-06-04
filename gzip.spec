@@ -1,11 +1,11 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.3.11
+Version: 1.3.12
 Release: 1%{?dist}
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
-Patch0: gzip-1.3.9-openbsd-owl-tmp.patch
+Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch3: gzip-1.3.9-stderr.patch
 Patch4: gzip-1.3.10-zgreppipe.patch
@@ -91,6 +91,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Mon Jun  4 2007 Ivana Varekova <varekova@redhat.com> - 1.3.12-1
+- update to 1.3.12
+
 * Mon Mar  5 2007 Ivana Varekova <varekova@redhat.com> - 1.3.11-1
 - update to 1.3.11
   remove uncompress
