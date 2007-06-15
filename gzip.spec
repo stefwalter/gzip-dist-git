@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.12
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
@@ -11,8 +11,6 @@ Patch3: gzip-1.3.9-stderr.patch
 Patch4: gzip-1.3.10-zgreppipe.patch
 Patch5: gzip-1.3.9-rsync.patch
 Patch7: gzip-1.3.9-addsuffix.patch
-Patch12: gzip-1.3.5-cve-2006-4335.patch
-Patch13: gzip-1.3.5-cve-2006-4336.patch
 Patch14: gzip-1.3.5-cve-2006-4338.patch
 Patch15: gzip-1.3.9-cve-2006-4337.patch
 Patch16: gzip-1.3.5-cve-2006-4337_len.patch
@@ -38,13 +36,10 @@ very commonly used data compression program.
 %patch4 -p1 -b .nixi
 %patch5 -p1 -b .rsync
 %patch7 -p1 -b .addsuffix
-%patch12 -p1 -b .4335
-%patch13 -p1 -b .4336
 %patch14 -p1 -b .4338
 %patch15 -p1 -b .4337
 %patch16 -p1 -b .4337l
 %patch17 -p1 -b .futimens
-
 %build
 export DEFS="NO_ASM"
 export CPPFLAGS="-DHAVE_LSTAT"
@@ -91,6 +86,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Jun 15 2007 Ivana Varekova <varekova@redhat.com> - 1.3.12-3
+- remove useless patches (fixed in upstream version)
+
 * Mon Jun 11 2007 Ivana Varekova <varekova@redhat.com> - 1.3.12-2
 - remove useless patches
 
