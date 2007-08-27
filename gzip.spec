@@ -2,7 +2,8 @@ Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.12
 Release: 3%{?dist}
-License: GPL
+# info pages are under GFDL license
+License: GPLv2 and GFDL
 Group: Applications/File
 Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
