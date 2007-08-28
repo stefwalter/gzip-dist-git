@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.12
-Release: 3%{?dist}
+Release: 4%{?dist}
 # info pages are under GFDL license
 License: GPLv2 and GFDL
 Group: Applications/File
@@ -87,6 +87,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Aug 28 2007 Fedora Release Engineering <rel-eng at fedoraproject dot org> - 1.3.12-4
+- Rebuild for selinux ppc32 issue.
+
 * Fri Jun 15 2007 Ivana Varekova <varekova@redhat.com> - 1.3.12-3
 - remove useless patches (fixed in upstream version)
 
