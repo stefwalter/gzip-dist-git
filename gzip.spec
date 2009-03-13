@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.12
-Release: 8%{?dist}
+Release: 9%{?dist}
 # info pages are under GFDL license
 License: GPLv2 and GFDL
 Group: Applications/File
@@ -16,6 +16,7 @@ Patch14: gzip-1.3.5-cve-2006-4338.patch
 Patch15: gzip-1.3.9-cve-2006-4337.patch
 Patch16: gzip-1.3.5-cve-2006-4337_len.patch
 Patch17: gzip-1.3.12-futimens.patch
+Patch18: gzip-1.3.12-zdiff.patch
 URL: http://www.gzip.org/
 Requires: /sbin/install-info
 Requires: mktemp less
@@ -41,6 +42,7 @@ very commonly used data compression program.
 %patch15 -p1 -b .4337
 %patch16 -p1 -b .4337l
 %patch17 -p1 -b .futimens
+%patch18 -p1 -b .ret
 %build
 export DEFS="NO_ASM"
 export CPPFLAGS="-DHAVE_LSTAT"
@@ -87,6 +89,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Mar 13 2009 Ivana Varekova <varekova@redhat.com> - 1.3.12-9
+- fix #484213 - zdiff shows no output
+
 * Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.12-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
