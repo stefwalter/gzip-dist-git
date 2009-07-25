@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.12
-Release: 9%{?dist}
+Release: 10%{?dist}
 # info pages are under GFDL license
 License: GPLv2 and GFDL
 Group: Applications/File
@@ -89,6 +89,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.12-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Fri Mar 13 2009 Ivana Varekova <varekova@redhat.com> - 1.3.12-9
 - fix #484213 - zdiff shows no output
 
