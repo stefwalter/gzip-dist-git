@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.12
-Release: 10%{?dist}
+Release: 11%{?dist}
 # info pages are under GFDL license
 License: GPLv2 and GFDL
 Group: Applications/File
@@ -73,11 +73,15 @@ rm -f ${RPM_BUILD_ROOT}/bin/uncompress
 rm -rf ${RPM_BUILD_ROOT}
 
 %post
-/sbin/install-info %{_infodir}/gzip.info.gz %{_infodir}/dir || :
+if [ -f %{_infodir}/gzip.info* ]; then
+    /sbin/install-info %{_infodir}/gzip.info.gz %{_infodir}/dir || :
+fi
 
 %preun
 if [ $1 = 0 ]; then
-    /sbin/install-info --delete %{_infodir}/gzip.info.gz %{_infodir}/dir || :
+    if [ -f %{_infodir}/gzip.info* ]; then
+        /sbin/install-info --delete %{_infodir}/gzip.info.gz %{_infodir}/dir || :
+    fi
 fi
 
 %files
@@ -89,6 +93,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Aug 11 2009 Ivana Varekova <varekova redhat com> - 1.3.12-11
+- fix installation with --excludedocs option (#515975)
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.12-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
