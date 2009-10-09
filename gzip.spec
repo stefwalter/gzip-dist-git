@@ -1,11 +1,11 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.12
-Release: 11%{?dist}
+Release: 12%{?dist}
 # info pages are under GFDL license
 License: GPLv2 and GFDL
 Group: Applications/File
-Source: ftp://alpha.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
+Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch3: gzip-1.3.9-stderr.patch
@@ -93,6 +93,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Oct  9 2009 Ivana Varekova <varekova@redhat.com> - 1.3.12-12
+- change the source tag
+
 * Tue Aug 11 2009 Ivana Varekova <varekova redhat com> - 1.3.12-11
 - fix installation with --excludedocs option (#515975)
 
