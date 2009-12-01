@@ -1,21 +1,20 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.3.12
-Release: 12%{?dist}
+Version: 1.3.13
+Release: 1%{?dist}
 # info pages are under GFDL license
-License: GPLv2 and GFDL
+License: GPLv3+ and GFDL
 Group: Applications/File
 Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch3: gzip-1.3.9-stderr.patch
 Patch4: gzip-1.3.10-zgreppipe.patch
-Patch5: gzip-1.3.9-rsync.patch
+Patch5: gzip-1.3.13-rsync.patch
 Patch7: gzip-1.3.9-addsuffix.patch
 Patch14: gzip-1.3.5-cve-2006-4338.patch
-Patch15: gzip-1.3.9-cve-2006-4337.patch
+Patch15: gzip-1.3.13-cve-2006-4337.patch
 Patch16: gzip-1.3.5-cve-2006-4337_len.patch
-Patch17: gzip-1.3.12-futimens.patch
 Patch18: gzip-1.3.12-zdiff.patch
 URL: http://www.gzip.org/
 Requires: /sbin/install-info
@@ -41,8 +40,8 @@ very commonly used data compression program.
 %patch14 -p1 -b .4338
 %patch15 -p1 -b .4337
 %patch16 -p1 -b .4337l
-%patch17 -p1 -b .futimens
 %patch18 -p1 -b .ret
+
 %build
 export DEFS="NO_ASM"
 export CPPFLAGS="-DHAVE_LSTAT"
@@ -93,6 +92,13 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Dec  1 2009 Karel Klic <kklic@redhat.com> - 1.3.13-1
+- New upstream version
+- Updated license from GPLv2 to GPLv3+
+- Removed gzip-1.3.12-futimens.patch, as it is fixed in the new version 
+- Updated rsync patch to the new upstream version
+- Updated cve-2006-4337 patch to use gzip_error instead of error
+
 * Fri Oct  9 2009 Ivana Varekova <varekova@redhat.com> - 1.3.12-12
 - change the source tag
 
