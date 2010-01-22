@@ -1,21 +1,23 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.13
-Release: 1%{?dist}
+Release: 2%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
 Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
-Patch3: gzip-1.3.9-stderr.patch
-Patch4: gzip-1.3.10-zgreppipe.patch
-Patch5: gzip-1.3.13-rsync.patch
-Patch7: gzip-1.3.9-addsuffix.patch
-Patch14: gzip-1.3.5-cve-2006-4338.patch
-Patch15: gzip-1.3.13-cve-2006-4337.patch
-Patch16: gzip-1.3.5-cve-2006-4337_len.patch
-Patch18: gzip-1.3.12-zdiff.patch
+Patch2: gzip-1.3.9-stderr.patch
+Patch3: gzip-1.3.10-zgreppipe.patch
+Patch4: gzip-1.3.13-rsync.patch
+Patch5: gzip-1.3.9-addsuffix.patch
+Patch6: gzip-1.3.5-cve-2006-4338.patch
+Patch7: gzip-1.3.13-cve-2006-4337.patch
+Patch8: gzip-1.3.5-cve-2006-4337_len.patch
+Patch9: gzip-1.3.12-zdiff.patch
+# Fixed in upstream code.
+Patch10: gzip-1.3.12-cve-2010-0001.patch
 URL: http://www.gzip.org/
 Requires: /sbin/install-info
 Requires: mktemp less
@@ -33,14 +35,15 @@ very commonly used data compression program.
 %setup -q
 %patch0 -p1 -b .owl-tmp
 %patch1 -p1 -b .zforce
-%patch3 -p1 -b .stderr
-%patch4 -p1 -b .nixi
-%patch5 -p1 -b .rsync
-%patch7 -p1 -b .addsuffix
-%patch14 -p1 -b .4338
-%patch15 -p1 -b .4337
-%patch16 -p1 -b .4337l
-%patch18 -p1 -b .ret
+%patch2 -p1 -b .stderr
+%patch3 -p1 -b .nixi
+%patch4 -p1 -b .rsync
+%patch5 -p1 -b .addsuffix
+%patch6 -p1 -b .4338
+%patch7 -p1 -b .4337
+%patch8 -p1 -b .4337l
+%patch9 -p1 -b .ret
+%patch10 -p1 -b .cve-2010-0001
 
 %build
 export DEFS="NO_ASM"
@@ -92,6 +95,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Jan 22 2010 Karel Klic <kklic@redhat.com> - 1.3.13-2
+- Fixed CVE-2010-0001 (rhbz#554418)
+
 * Tue Dec  1 2009 Karel Klic <kklic@redhat.com> - 1.3.13-1
 - New upstream version
 - Updated license from GPLv2 to GPLv3+
