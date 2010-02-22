@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.3.13
-Release: 2%{?dist}
+Release: 3%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -18,6 +18,9 @@ Patch8: gzip-1.3.5-cve-2006-4337_len.patch
 Patch9: gzip-1.3.12-zdiff.patch
 # Fixed in upstream code.
 Patch10: gzip-1.3.12-cve-2010-0001.patch
+# Fixed in upstream code.
+# http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
+Patch11: gzip-1.3.13-noemptysuffix.patch
 URL: http://www.gzip.org/
 Requires: /sbin/install-info
 Requires: mktemp less
@@ -44,6 +47,7 @@ very commonly used data compression program.
 %patch8 -p1 -b .4337l
 %patch9 -p1 -b .ret
 %patch10 -p1 -b .cve-2010-0001
+%patch11 -p1 -b .noemptysuffix
 
 %build
 export DEFS="NO_ASM"
@@ -95,6 +99,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Mon Feb 22 2010 Karel Klic <kklic@redhat.com> - 1.3.13-3
+- Added a patch to disallow -S '' parameter (noemptysuffix)
+
 * Fri Jan 22 2010 Karel Klic <kklic@redhat.com> - 1.3.13-2
 - Fixed CVE-2010-0001 (rhbz#554418)
 
