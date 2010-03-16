@@ -1,11 +1,11 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.3.13
-Release: 3%{?dist}
+Version: 1.4
+Release: 1%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
-Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
+Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.xz
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch2: gzip-1.3.9-stderr.patch
@@ -15,9 +15,6 @@ Patch5: gzip-1.3.9-addsuffix.patch
 Patch6: gzip-1.3.5-cve-2006-4338.patch
 Patch7: gzip-1.3.13-cve-2006-4337.patch
 Patch8: gzip-1.3.5-cve-2006-4337_len.patch
-Patch9: gzip-1.3.12-zdiff.patch
-# Fixed in upstream code.
-Patch10: gzip-1.3.12-cve-2010-0001.patch
 # Fixed in upstream code.
 # http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
 Patch11: gzip-1.3.13-noemptysuffix.patch
@@ -45,8 +42,6 @@ very commonly used data compression program.
 %patch6 -p1 -b .4338
 %patch7 -p1 -b .4337
 %patch8 -p1 -b .4337l
-%patch9 -p1 -b .ret
-%patch10 -p1 -b .cve-2010-0001
 %patch11 -p1 -b .noemptysuffix
 
 %build
@@ -99,6 +94,12 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Mar 16 2010 Karel Klic <kklic@redhat.com> - 1.4-1
+- New upstream release
+- Use XZ upstream source archive
+- Removed cve-2010-0001 patch as it's fixed in this release
+- Removed zdiff patch as it's fixed in this release
+
 * Mon Feb 22 2010 Karel Klic <kklic@redhat.com> - 1.3.13-3
 - Added a patch to disallow -S '' parameter (noemptysuffix)
 
