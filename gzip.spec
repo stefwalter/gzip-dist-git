@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -19,10 +19,12 @@ Patch8: gzip-1.3.5-cve-2006-4337_len.patch
 # http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
 Patch11: gzip-1.3.13-noemptysuffix.patch
 URL: http://www.gzip.org/
+# Requires should not be added for gzip wrappers (eg. zdiff, zgrep,
+# zless) of another tools, because gzip "extends" the tools by its
+# wrappers much more than it "requires" them.
 Requires: /sbin/install-info
-Requires: mktemp less
+Requires: mktemp
 BuildRequires: texinfo
-Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
 The gzip package contains the popular GNU gzip data compression
@@ -49,7 +51,7 @@ export DEFS="NO_ASM"
 export CPPFLAGS="-DHAVE_LSTAT"
 %configure  --bindir=/bin
 
-make 
+make
 #make gzip.info
 
 %install
@@ -69,9 +71,6 @@ gzip -9nf ${RPM_BUILD_ROOT}%{_infodir}/gzip.info*
 rm -f ${RPM_BUILD_ROOT}%{_infodir}/dir
 # uncompress is a part of ncompress package
 rm -f ${RPM_BUILD_ROOT}/bin/uncompress
-
-%clean
-rm -rf ${RPM_BUILD_ROOT}
 
 %post
 if [ -f %{_infodir}/gzip.info* ]; then
@@ -94,6 +93,11 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Mon Sep  6 2010 Karel Klic <kklic@redhat.com> - 1.4-2
+- Removed the dependency on less (rhbz#629580)
+- Removed the BuildRoot tag
+- Removed the %%clean section
+
 * Tue Mar 16 2010 Karel Klic <kklic@redhat.com> - 1.4-1
 - New upstream release
 - Use XZ upstream source archive
@@ -109,7 +113,7 @@ fi
 * Tue Dec  1 2009 Karel Klic <kklic@redhat.com> - 1.3.13-1
 - New upstream version
 - Updated license from GPLv2 to GPLv3+
-- Removed gzip-1.3.12-futimens.patch, as it is fixed in the new version 
+- Removed gzip-1.3.12-futimens.patch, as it is fixed in the new version
 - Updated rsync patch to the new upstream version
 - Updated cve-2006-4337 patch to use gzip_error instead of error
 
