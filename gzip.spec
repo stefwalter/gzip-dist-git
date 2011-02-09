@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.4
-Release: 2%{?dist}
+Release: 3%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -93,6 +93,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Mon Sep  6 2010 Karel Klic <kklic@redhat.com> - 1.4-2
 - Removed the dependency on less (rhbz#629580)
 - Removed the BuildRoot tag
