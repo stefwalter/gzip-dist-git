@@ -23,7 +23,7 @@ URL: http://www.gzip.org/
 # zless) of another tools, because gzip "extends" the tools by its
 # wrappers much more than it "requires" them.
 Requires: /sbin/install-info
-Requires: mktemp
+Requires: coreutils
 BuildRequires: texinfo
 
 %description
