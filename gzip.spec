@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.4
-Release: 5%{?dist}
+Release: 6%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -25,7 +25,7 @@ URL: http://www.gzip.org/
 Requires: /sbin/install-info
 Requires: coreutils
 BuildRequires: texinfo
-#Conflicts: filesystem < 3
+Conflicts: filesystem < 3
 Provides: /bin/gunzip
 Provides: /bin/gzip
 Provides: /bin/zcat
@@ -89,6 +89,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Wed Jan 25 2012 Harald Hoyer <harald@redhat.com> 1.4-6
+- add filesystem guard
+
 * Wed Jan 25 2012 Harald Hoyer <harald@redhat.com> 1.4-5
 - install everything in /usr
   https://fedoraproject.org/wiki/Features/UsrMove
