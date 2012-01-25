@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.4
-Release: 4%{?dist}
+Release: 5%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -25,6 +25,10 @@ URL: http://www.gzip.org/
 Requires: /sbin/install-info
 Requires: coreutils
 BuildRequires: texinfo
+#Conflicts: filesystem < 3
+Provides: /bin/gunzip
+Provides: /bin/gzip
+Provides: /bin/zcat
 
 %description
 The gzip package contains the popular GNU gzip data compression
@@ -49,28 +53,21 @@ very commonly used data compression program.
 %build
 export DEFS="NO_ASM"
 export CPPFLAGS="-DHAVE_LSTAT"
-%configure  --bindir=/bin
+%configure 
 
 make
 #make gzip.info
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-%makeinstall  bindir=${RPM_BUILD_ROOT}/bin
-mkdir -p ${RPM_BUILD_ROOT}%{_bindir}
-ln -sf ../../bin/gzip ${RPM_BUILD_ROOT}%{_bindir}/gzip
-ln -sf ../../bin/gunzip ${RPM_BUILD_ROOT}%{_bindir}/gunzip
-
-for i in  zcmp zegrep zforce zless znew gzexe zdiff zfgrep zgrep zmore ; do
-    mv ${RPM_BUILD_ROOT}/bin/$i ${RPM_BUILD_ROOT}%{_bindir}/$i
-done
+%makeinstall 
 
 gzip -9nf ${RPM_BUILD_ROOT}%{_infodir}/gzip.info*
 
 # we don't ship it, so let's remove it from ${RPM_BUILD_ROOT}
 rm -f ${RPM_BUILD_ROOT}%{_infodir}/dir
 # uncompress is a part of ncompress package
-rm -f ${RPM_BUILD_ROOT}/bin/uncompress
+rm -f ${RPM_BUILD_ROOT}/%{_bindir}/uncompress
 
 %post
 if [ -f %{_infodir}/gzip.info* ]; then
@@ -87,12 +84,15 @@ fi
 %files
 %defattr(-,root,root)
 %doc NEWS README AUTHORS ChangeLog THANKS TODO
-/bin/*
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/gzip.info*
 
 %changelog
+* Wed Jan 25 2012 Harald Hoyer <harald@redhat.com> 1.4-5
+- install everything in /usr
+  https://fedoraproject.org/wiki/Features/UsrMove
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
