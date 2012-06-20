@@ -17,7 +17,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
   * Local data used by the "longest match" routines.
   */
 @@ -212,6 +220,8 @@ local int compr_level;
- unsigned near good_match;
+ unsigned good_match;
  /* Use a faster search when the previous match is longer than this */
  
 +local ulg rsync_sum;  /* rolling sum of rsync window */
@@ -102,26 +102,28 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
      unsigned match_length = 0;  /* length of best match */
  
      prev_length = MIN_MATCH-1;
-@@ -620,6 +669,7 @@ local off_t deflate_fast()
+@@ -674,7 +674,8 @@
+             flush = ct_tally(strstart-match_start, match_length - MIN_MATCH);
  
              lookahead -= match_length;
- 
-+	    RSYNC_ROLL(strstart, match_length); 
- 	    /* Insert new strings in the hash table only if the match length
+-
++            
++            RSYNC_ROLL(strstart, match_length);
+             /* Insert new strings in the hash table only if the match length
               * is not too large. This saves time but degrades compression.
               */
-@@ -648,9 +698,14 @@ local off_t deflate_fast()
+@@ -703,9 +704,14 @@
              /* No match, output a literal byte */
              Tracevv((stderr,"%c",window[strstart]));
              flush = ct_tally (0, window[strstart]);
 +            RSYNC_ROLL(strstart, 1);
              lookahead--;
- 	    strstart++;
+             strstart++;
          }
-+	if (rsync && strstart > rsync_chunk_end) {                                                        
++        if (rsync && strstart > rsync_chunk_end) {                                                        
 +            rsync_chunk_end = 0xFFFFFFFFUL;                                                               
 +            flush = 2;                                                                                    
-+        }  
++       }  
          if (flush) FLUSH_BLOCK(0), block_start = strstart;
  
          /* Make sure that we always have enough lookahead, except
@@ -206,14 +208,16 @@ diff -up gzip-1.3.13/gzip.c.rsync gzip-1.3.13/gzip.c
  
  static int handled_sig[] =
    {
-@@ -282,6 +283,7 @@ struct option longopts[] =
+@@ -271,7 +271,7 @@ static const struct option longopts[] =
      {"best",       0, 0, '9'}, /* compress better */
      {"lzw",        0, 0, 'Z'}, /* make output compatible with old compress */
      {"bits",       1, 0, 'b'}, /* max number of bits per code (implies -Z) */
-+    {"rsyncable",  0, 0, 'R'}, /* make rsync-friendly archive */      
+-
++    {"rsyncable",  0, 0, 'R'}, /* make rsync-friendly archive */ 
      { 0, 0, 0, 0 }
  };
  
+
 @@ -363,6 +365,7 @@ local void help()
   "  -Z, --lzw         produce output compatible with old compress",
   "  -b, --bits=BITS   max number of bits per code (implies -Z)",
@@ -222,16 +226,17 @@ diff -up gzip-1.3.13/gzip.c.rsync gzip-1.3.13/gzip.c
   "",
   "With no FILE, or when FILE is -, read standard input.",
   "",
-@@ -493,6 +496,9 @@ int main (argc, argv)
- 	    recursive = 1;
+@@ -484,6 +484,9 @@ int main (int argc, char **argv)
+             recursive = 1;
  #endif
- 	    break;
-+
+             break;
++            
 +        case 'R':
-+	    rsync = 1; break;
- 	case 'S':
++            rsync = 1; break;
+         case 'S':
  #ifdef NO_MULTIPLE_DOTS
              if (*optarg == '.') optarg++;
+
 diff -up gzip-1.3.13/gzip.h.rsync gzip-1.3.13/gzip.h
 --- gzip-1.3.13/gzip.h.rsync	2009-09-26 20:43:28.000000000 +0200
 +++ gzip-1.3.13/gzip.h	2009-12-01 16:14:24.664394713 +0100
@@ -243,15 +248,16 @@ diff -up gzip-1.3.13/gzip.h.rsync gzip-1.3.13/gzip.h
  
  extern off_t bytes_in;   /* number of input bytes */
  extern off_t bytes_out;  /* number of output bytes */
-@@ -306,7 +307,7 @@ off_t deflate OF((void));
+@@ -288,7 +288,7 @@ extern off_t deflate (void);
          /* in trees.c */
- void ct_init     OF((ush *attr, int *method));
- int  ct_tally    OF((int dist, int lc));
--off_t flush_block OF((char *buf, ulg stored_len, int eof));
-+off_t flush_block OF((char *buf, ulg stored_len, int pad, int eof)); 
+ extern void ct_init     (ush *attr, int *method);
+ extern int  ct_tally    (int dist, int lc);
+-extern off_t flush_block (char *buf, ulg stored_len, int eof);
++extern off_t flush_block (char *buf, ulg stored_len, int pad, int eof);
  
          /* in bits.c */
- void     bi_init    OF((file_t zipfile));
+ extern void     bi_init    (file_t zipfile);
+
 diff -up gzip-1.3.13/trees.c.rsync gzip-1.3.13/trees.c
 --- gzip-1.3.13/trees.c.rsync	2009-09-26 20:43:28.000000000 +0200
 +++ gzip-1.3.13/trees.c	2009-12-01 16:14:24.655388257 +0100

@@ -1,15 +1,13 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.4
-Release: 6%{?dist}
+Version: 1.5
+Release: 1%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
 Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.xz
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
-Patch2: gzip-1.3.9-stderr.patch
-Patch3: gzip-1.3.10-zgreppipe.patch
 Patch4: gzip-1.3.13-rsync.patch
 Patch5: gzip-1.3.9-addsuffix.patch
 Patch6: gzip-1.3.5-cve-2006-4338.patch
@@ -17,7 +15,6 @@ Patch7: gzip-1.3.13-cve-2006-4337.patch
 Patch8: gzip-1.3.5-cve-2006-4337_len.patch
 # Fixed in upstream code.
 # http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
-Patch11: gzip-1.3.13-noemptysuffix.patch
 URL: http://www.gzip.org/
 # Requires should not be added for gzip wrappers (eg. zdiff, zgrep,
 # zless) of another tools, because gzip "extends" the tools by its
@@ -41,14 +38,11 @@ very commonly used data compression program.
 %setup -q
 %patch0 -p1 -b .owl-tmp
 %patch1 -p1 -b .zforce
-%patch2 -p1 -b .stderr
-%patch3 -p1 -b .nixi
 %patch4 -p1 -b .rsync
 %patch5 -p1 -b .addsuffix
 %patch6 -p1 -b .4338
 %patch7 -p1 -b .4337
 %patch8 -p1 -b .4337l
-%patch11 -p1 -b .noemptysuffix
 
 %build
 export DEFS="NO_ASM"
@@ -89,6 +83,8 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Jun 19 2012 Michal Luscon <mluscon@redhat.com> 1.5-1
+
 * Wed Jan 25 2012 Harald Hoyer <harald@redhat.com> 1.4-6
 - add filesystem guard
 
