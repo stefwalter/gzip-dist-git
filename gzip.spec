@@ -26,6 +26,9 @@ Conflicts: filesystem < 3
 Provides: /bin/gunzip
 Provides: /bin/gzip
 Provides: /bin/zcat
+# Gzip contains bundled Gnulib
+# exception https://fedorahosted.org/fpc/ticket/174 
+Provides: bundled(gnulib)
 
 %description
 The gzip package contains the popular GNU gzip data compression
@@ -83,7 +86,14 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Thu Jun 21 2012 Michal Luscon <mluscon@redhat.com>
+- Added bundled(glib) 
+
 * Tue Jun 19 2012 Michal Luscon <mluscon@redhat.com> 1.5-1
+- New upstream version
+- Removed gzip-1.3.9-stderr.patch
+- Removed gzip-1.3.10-zgreppipe.patch
+- Removed gzip-1.3.13-noemptysuffix.patch
 
 * Wed Jan 25 2012 Harald Hoyer <harald@redhat.com> 1.4-6
 - add filesystem guard
