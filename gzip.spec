@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -86,6 +86,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Thu Jun 21 2012 Michal Luscon <mluscon@redhat.com>
 - Added bundled(glib) 
 
