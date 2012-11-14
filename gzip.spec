@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -86,6 +86,10 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Tue Nov 13 2012 Daniel Drake <dsd@laptop.org> - 1.5-3
+- Fix "gzip --rsyncable" functionality by removing a spurious blank line from
+  the patch.
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 

@@ -1,6 +1,7 @@
-diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
---- gzip-1.3.13/deflate.c.rsync	2009-09-26 20:43:28.000000000 +0200
-+++ gzip-1.3.13/deflate.c	2009-12-01 16:14:24.656387546 +0100
+Index: gzip-1.5/deflate.c
+===================================================================
+--- gzip-1.5.orig/deflate.c
++++ gzip-1.5/deflate.c
 @@ -131,6 +131,14 @@
  #endif
  /* Matches of length 3 are discarded if their distance exceeds TOO_FAR */
@@ -25,7 +26,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
  
  /* Values for max_lazy_match, good_match and max_chain_length, depending on
   * the desired pack level (0..9). The values given below have been tuned to
-@@ -310,6 +320,10 @@ void lm_init (pack_level, flags)
+@@ -314,6 +324,10 @@ void lm_init (pack_level, flags)
  #endif
      /* prev will be initialized on the fly */
  
@@ -36,7 +37,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
      /* Set the default configuration parameters:
       */
      max_lazy_match   = configuration_table[pack_level].max_lazy;
-@@ -546,6 +560,8 @@ local void fill_window()
+@@ -550,6 +564,8 @@ local void fill_window()
          memcpy((char*)window, (char*)window+WSIZE, (unsigned)WSIZE);
          match_start -= WSIZE;
          strstart    -= WSIZE; /* we now have strstart >= MAX_DIST: */
@@ -45,7 +46,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
  
          block_start -= (long) WSIZE;
  
-@@ -573,13 +589,46 @@ local void fill_window()
+@@ -579,13 +595,46 @@ local void fill_window()
      }
  }
  
@@ -93,7 +94,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
  
  /* ===========================================================================
   * Processes a new input file and return its compressed length. This
-@@ -590,7 +639,7 @@ local void fill_window()
+@@ -596,7 +645,7 @@ local void fill_window()
  local off_t deflate_fast()
  {
      IPos hash_head; /* head of the hash chain */
@@ -102,7 +103,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
      unsigned match_length = 0;  /* length of best match */
  
      prev_length = MIN_MATCH-1;
-@@ -674,7 +674,8 @@
+@@ -625,7 +674,8 @@ local off_t deflate_fast()
              flush = ct_tally(strstart-match_start, match_length - MIN_MATCH);
  
              lookahead -= match_length;
@@ -112,7 +113,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
              /* Insert new strings in the hash table only if the match length
               * is not too large. This saves time but degrades compression.
               */
-@@ -703,9 +704,14 @@
+@@ -654,9 +704,14 @@ local off_t deflate_fast()
              /* No match, output a literal byte */
              Tracevv((stderr,"%c",window[strstart]));
              flush = ct_tally (0, window[strstart]);
@@ -127,7 +128,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
          if (flush) FLUSH_BLOCK(0), block_start = strstart;
  
          /* Make sure that we always have enough lookahead, except
-@@ -724,6 +779,7 @@ off_t deflate()
+@@ -730,6 +785,7 @@ off_t deflate()
               */
              lookahead -= prev_length-1;
              prev_length -= 2;
@@ -135,7 +136,7 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
              do {
                  strstart++;
                  INSERT_STRING(strstart, hash_head);
-@@ -736,24 +792,40 @@ off_t deflate()
+@@ -742,24 +798,40 @@ off_t deflate()
              match_available = 0;
              match_length = MIN_MATCH-1;
              strstart++;
@@ -179,9 +180,10 @@ diff -up gzip-1.3.13/deflate.c.rsync gzip-1.3.13/deflate.c
              strstart++;
              lookahead--;
          }
-diff -up gzip-1.3.13/doc/gzip.texi.rsync gzip-1.3.13/doc/gzip.texi
---- gzip-1.3.13/doc/gzip.texi.rsync	2009-09-28 11:08:16.000000000 +0200
-+++ gzip-1.3.13/doc/gzip.texi	2009-12-01 16:14:24.664394713 +0100
+Index: gzip-1.5/doc/gzip.texi
+===================================================================
+--- gzip-1.5.orig/doc/gzip.texi
++++ gzip-1.5/doc/gzip.texi
 @@ -353,6 +353,14 @@ specified on the command line are direct
  into the directory and compress all the files it finds there (or
  decompress them in the case of @command{gunzip}).
@@ -197,10 +199,11 @@ diff -up gzip-1.3.13/doc/gzip.texi.rsync gzip-1.3.13/doc/gzip.texi
  @item --suffix @var{suf}
  @itemx -S @var{suf}
  Use suffix @var{suf} instead of @samp{.gz}.  Any suffix can be
-diff -up gzip-1.3.13/gzip.c.rsync gzip-1.3.13/gzip.c
---- gzip-1.3.13/gzip.c.rsync	2009-09-26 20:56:02.000000000 +0200
-+++ gzip-1.3.13/gzip.c	2009-12-01 16:18:17.121387126 +0100
-@@ -229,6 +229,7 @@ int  ofd;                  /* output fil
+Index: gzip-1.5/gzip.c
+===================================================================
+--- gzip-1.5.orig/gzip.c
++++ gzip-1.5/gzip.c
+@@ -213,6 +213,7 @@ int  ofd;                  /* output fil
  unsigned insize;           /* valid bytes in inbuf */
  unsigned inptr;            /* index of next byte to be processed in inbuf */
  unsigned outcnt;           /* bytes in output buffer */
@@ -208,7 +211,7 @@ diff -up gzip-1.3.13/gzip.c.rsync gzip-1.3.13/gzip.c
  
  static int handled_sig[] =
    {
-@@ -271,7 +271,7 @@ static const struct option longopts[] =
+@@ -270,7 +271,7 @@ static const struct option longopts[] =
      {"best",       0, 0, '9'}, /* compress better */
      {"lzw",        0, 0, 'Z'}, /* make output compatible with old compress */
      {"bits",       1, 0, 'b'}, /* max number of bits per code (implies -Z) */
@@ -217,8 +220,7 @@ diff -up gzip-1.3.13/gzip.c.rsync gzip-1.3.13/gzip.c
      { 0, 0, 0, 0 }
  };
  
-
-@@ -363,6 +365,7 @@ local void help()
+@@ -353,6 +354,7 @@ local void help()
   "  -Z, --lzw         produce output compatible with old compress",
   "  -b, --bits=BITS   max number of bits per code (implies -Z)",
  #endif
@@ -226,7 +228,7 @@ diff -up gzip-1.3.13/gzip.c.rsync gzip-1.3.13/gzip.c
   "",
   "With no FILE, or when FILE is -, read standard input.",
   "",
-@@ -484,6 +484,9 @@ int main (int argc, char **argv)
+@@ -482,6 +484,9 @@ int main (int argc, char **argv)
              recursive = 1;
  #endif
              break;
@@ -236,11 +238,11 @@ diff -up gzip-1.3.13/gzip.c.rsync gzip-1.3.13/gzip.c
          case 'S':
  #ifdef NO_MULTIPLE_DOTS
              if (*optarg == '.') optarg++;
-
-diff -up gzip-1.3.13/gzip.h.rsync gzip-1.3.13/gzip.h
---- gzip-1.3.13/gzip.h.rsync	2009-09-26 20:43:28.000000000 +0200
-+++ gzip-1.3.13/gzip.h	2009-12-01 16:14:24.664394713 +0100
-@@ -158,6 +158,7 @@ EXTERN(uch, window);         /* Sliding 
+Index: gzip-1.5/gzip.h
+===================================================================
+--- gzip-1.5.orig/gzip.h
++++ gzip-1.5/gzip.h
+@@ -140,6 +140,7 @@ EXTERN(uch, window);         /* Sliding
  extern unsigned insize; /* valid bytes in inbuf */
  extern unsigned inptr;  /* index of next byte to be processed in inbuf */
  extern unsigned outcnt; /* bytes in output buffer */
@@ -248,7 +250,7 @@ diff -up gzip-1.3.13/gzip.h.rsync gzip-1.3.13/gzip.h
  
  extern off_t bytes_in;   /* number of input bytes */
  extern off_t bytes_out;  /* number of output bytes */
-@@ -288,7 +288,7 @@ extern off_t deflate (void);
+@@ -287,7 +288,7 @@ extern off_t deflate (void);
          /* in trees.c */
  extern void ct_init     (ush *attr, int *method);
  extern int  ct_tally    (int dist, int lc);
@@ -257,10 +259,10 @@ diff -up gzip-1.3.13/gzip.h.rsync gzip-1.3.13/gzip.h
  
          /* in bits.c */
  extern void     bi_init    (file_t zipfile);
-
-diff -up gzip-1.3.13/trees.c.rsync gzip-1.3.13/trees.c
---- gzip-1.3.13/trees.c.rsync	2009-09-26 20:43:28.000000000 +0200
-+++ gzip-1.3.13/trees.c	2009-12-01 16:14:24.655388257 +0100
+Index: gzip-1.5/trees.c
+===================================================================
+--- gzip-1.5.orig/trees.c
++++ gzip-1.5/trees.c
 @@ -856,9 +856,10 @@ local void send_all_trees(lcodes, dcodes
   * trees or store, and output the encoded block to the zip file. This function
   * returns the total compressed length for the file so far.
