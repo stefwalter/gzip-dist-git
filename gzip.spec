@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.5
-Release: 5%{?dist}
+Version: 1.6
+Release: 1%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -9,10 +9,9 @@ Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.xz
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch4: gzip-1.3.13-rsync.patch
-Patch5: gzip-1.3.9-addsuffix.patch
-Patch6: gzip-1.3.5-cve-2006-4338.patch
-Patch7: gzip-1.3.13-cve-2006-4337.patch
-Patch8: gzip-1.3.5-cve-2006-4337_len.patch
+Patch5: gzip-1.3.5-cve-2006-4338.patch
+Patch6: gzip-1.3.13-cve-2006-4337.patch
+Patch7: gzip-1.3.5-cve-2006-4337_len.patch
 # Fixed in upstream code.
 # http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
 URL: http://www.gzip.org/
@@ -42,10 +41,9 @@ very commonly used data compression program.
 %patch0 -p1 -b .owl-tmp
 %patch1 -p1 -b .zforce
 %patch4 -p1 -b .rsync
-%patch5 -p1 -b .addsuffix
-%patch6 -p1 -b .4338
-%patch7 -p1 -b .4337
-%patch8 -p1 -b .4337l
+%patch5 -p1 -b .4338
+%patch6 -p1 -b .4337
+%patch7 -p1 -b .4337l
 
 %build
 export DEFS="NO_ASM"
@@ -86,8 +84,12 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
-* Thu Mar 14 2013 Michal Luscon <mluscon@redhat.com> 1.5-5
-- adjust gzip-1.3.5-zforce patch
+* Thu Jun 11 2013 Michal Luscon <mluscon@redhat.com> - 1.6-1
+- New upstream version
+- Removed addsuffix.patch
+
+* Thu Mar 14 2013 Michal Luscon <mluscon@redhat.com> - 1.5-5
+- Adjust gzip-1.3.5-zforce patch
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.5-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
