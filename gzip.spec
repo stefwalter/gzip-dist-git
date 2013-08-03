@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -84,6 +84,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Thu Jun 11 2013 Michal Luscon <mluscon@redhat.com> - 1.6-1
 - New upstream version
 - Removed addsuffix.patch
