@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.6
-Release: 2%{?dist}
+Release: 3%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -12,6 +12,7 @@ Patch4: gzip-1.3.13-rsync.patch
 Patch5: gzip-1.3.5-cve-2006-4338.patch
 Patch6: gzip-1.3.13-cve-2006-4337.patch
 Patch7: gzip-1.3.5-cve-2006-4337_len.patch
+Patch8: gzip-1.5-man-rsyncable.patch
 # Fixed in upstream code.
 # http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
 URL: http://www.gzip.org/
@@ -44,6 +45,7 @@ very commonly used data compression program.
 %patch5 -p1 -b .4338
 %patch6 -p1 -b .4337
 %patch7 -p1 -b .4337l
+%patch8 -p1 -b .man-rsyncable
 
 %build
 export DEFS="NO_ASM"
@@ -84,6 +86,9 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
+* Fri Jun 06 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-3
+- Added description of rsyncable into the manpage (#988713)
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
