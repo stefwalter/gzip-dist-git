@@ -90,7 +90,7 @@ fi
 %{_infodir}/gzip.info*
 
 %changelog
-* Sat Jul 12 2013 Tom Callaway <spot@fedoraproject.org> - 1.6-4
+* Sat Jul 12 2014 Tom Callaway <spot@fedoraproject.org> - 1.6-4
 - fix license handling
 
 * Fri Jun 06 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-3
