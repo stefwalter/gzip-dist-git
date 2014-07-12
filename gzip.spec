@@ -1,11 +1,12 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.6
-Release: 3%{?dist}
+Release: 4%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
-Source: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.xz
+Source0: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.xz
+Source1: https://www.gnu.org/licenses/fdl-1.3.txt
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch4: gzip-1.3.13-rsync.patch
@@ -39,6 +40,7 @@ very commonly used data compression program.
 
 %prep
 %setup -q
+cp %{SOURCE1} .
 %patch0 -p1 -b .owl-tmp
 %patch1 -p1 -b .zforce
 %patch4 -p1 -b .rsync
@@ -81,11 +83,16 @@ fi
 %files
 %defattr(-,root,root)
 %doc NEWS README AUTHORS ChangeLog THANKS TODO
+%{!?_licensedir:%global license %%doc}
+%license COPYING fdl-1.3.txt
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/gzip.info*
 
 %changelog
+* Sat Jul 12 2014 Tom Callaway <spot@fedoraproject.org> - 1.6-4
+- fix license handling
+
 * Fri Jun 06 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-3
 - Added description of rsyncable into the manpage (#988713)
 
