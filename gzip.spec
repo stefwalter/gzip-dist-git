@@ -105,9 +105,12 @@ fi
 %{profiledir}/*
 
 %changelog
-* Tue Aug 26 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-4
+* Tue Aug 26 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-7
+- correct changelog
+
+* Tue Aug 26 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-6
 - changed spec file - build section
-  obey compiler macros %__cc, %__cpp, %_cxx (#667144)
+  obey compiler macros %__cc, %__cpp, %__cxx (#667144)
 - zgrep inherits color setup from grep (#1034839)
 
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6-5
@@ -122,7 +125,7 @@ fi
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
-* Thu Jun 11 2013 Michal Luscon <mluscon@redhat.com> - 1.6-1
+* Tue Jun 11 2013 Michal Luscon <mluscon@redhat.com> - 1.6-1
 - New upstream version
 - Removed addsuffix.patch
 
