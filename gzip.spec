@@ -1,12 +1,17 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.6
-Release: 5%{?dist}
+Release: 6%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
 Source0: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.xz
 Source1: https://www.gnu.org/licenses/fdl-1.3.txt
+
+# downstream solution for coloured z*grep (#1034839)
+Source100: colorzgrep.csh
+Source101: colorzgrep.sh
+
 Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
 Patch1: gzip-1.3.5-zforce.patch
 Patch4: gzip-1.3.13-rsync.patch
@@ -52,6 +57,9 @@ cp %{SOURCE1} .
 %build
 export DEFS="NO_ASM"
 export CPPFLAGS="-DHAVE_LSTAT"
+export CC="%{__cc}"
+export CPP="%{__cpp}"
+export CXX="%{__cxx}"
 %configure 
 
 make
@@ -67,6 +75,12 @@ gzip -9nf ${RPM_BUILD_ROOT}%{_infodir}/gzip.info*
 rm -f ${RPM_BUILD_ROOT}%{_infodir}/dir
 # uncompress is a part of ncompress package
 rm -f ${RPM_BUILD_ROOT}/%{_bindir}/uncompress
+
+# coloured z*grep (#1034839)
+%global profiledir %{_sysconfdir}/profile.d
+mkdir -p %{buildroot}%{profiledir}
+install -p -m 644 %{SOURCE100} %{buildroot}%{profiledir}
+install -p -m 644 %{SOURCE101} %{buildroot}%{profiledir}
 
 %post
 if [ -f %{_infodir}/gzip.info* ]; then
@@ -88,8 +102,14 @@ fi
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/gzip.info*
+%{profiledir}/*
 
 %changelog
+* Tue Aug 26 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-4
+- changed spec file - build section
+  obey compiler macros %__cc, %__cpp, %_cxx (#667144)
+- zgrep inherits color setup from grep (#1034839)
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
