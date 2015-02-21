@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.6
-Release: 6%{?dist}
+Release: 7%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -105,6 +105,10 @@ fi
 %{profiledir}/*
 
 %changelog
+* Sat Feb 21 2015 Till Maas <opensource@till.name> - 1.6-7
+- Rebuilt for Fedora 23 Change
+  https://fedoraproject.org/wiki/Changes/Harden_all_packages_with_position-independent_code
+
 * Tue Aug 26 2014 Petr Stodulka <pstodulk@redhat.com> - 1.6-7
 - correct changelog
 
