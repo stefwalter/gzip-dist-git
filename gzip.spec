@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.6
-Release: 8%{?dist}
+Release: 9%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -19,6 +19,7 @@ Patch5: gzip-1.3.5-cve-2006-4338.patch
 Patch6: gzip-1.3.13-cve-2006-4337.patch
 Patch7: gzip-1.3.5-cve-2006-4337_len.patch
 Patch8: gzip-1.5-man-rsyncable.patch
+Patch9: gzip-1.6-zless.patch
 # Fixed in upstream code.
 # http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
 URL: http://www.gzip.org/
@@ -53,6 +54,7 @@ cp %{SOURCE1} .
 %patch6 -p1 -b .4337
 %patch7 -p1 -b .4337l
 %patch8 -p1 -b .man-rsyncable
+%patch9 -p1 -b .zless
 
 %build
 export DEFS="NO_ASM"
@@ -105,6 +107,9 @@ fi
 %{profiledir}/*
 
 %changelog
+* Thu Jul 09 2015 Petr Stodulka <pstodulk@redhat.com> - 1.6-9
+- fix zless for archive with empty file (#1238298)
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
