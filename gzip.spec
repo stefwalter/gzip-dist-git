@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.6
-Release: 9%{?dist}
+Release: 10%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -107,6 +107,9 @@ fi
 %{profiledir}/*
 
 %changelog
+* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.6-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Thu Jul 09 2015 Petr Stodulka <pstodulk@redhat.com> - 1.6-9
 - fix zless for archive with empty file (#1238298)
 
