@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.6
-Release: 10%{?dist}
+Version: 1.7
+Release: 1%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -12,14 +12,6 @@ Source1: https://www.gnu.org/licenses/fdl-1.3.txt
 Source100: colorzgrep.csh
 Source101: colorzgrep.sh
 
-Patch0: gzip-1.3.12-openbsd-owl-tmp.patch
-Patch1: gzip-1.3.5-zforce.patch
-Patch4: gzip-1.3.13-rsync.patch
-Patch5: gzip-1.3.5-cve-2006-4338.patch
-Patch6: gzip-1.3.13-cve-2006-4337.patch
-Patch7: gzip-1.3.5-cve-2006-4337_len.patch
-Patch8: gzip-1.5-man-rsyncable.patch
-Patch9: gzip-1.6-zless.patch
 # Fixed in upstream code.
 # http://thread.gmane.org/gmane.comp.gnu.gzip.bugs/378
 URL: http://www.gzip.org/
@@ -34,7 +26,7 @@ Provides: /bin/gunzip
 Provides: /bin/gzip
 Provides: /bin/zcat
 # Gzip contains bundled Gnulib
-# exception https://fedorahosted.org/fpc/ticket/174 
+# exception https://fedorahosted.org/fpc/ticket/174
 Provides: bundled(gnulib)
 
 %description
@@ -47,14 +39,6 @@ very commonly used data compression program.
 %prep
 %setup -q
 cp %{SOURCE1} .
-%patch0 -p1 -b .owl-tmp
-%patch1 -p1 -b .zforce
-%patch4 -p1 -b .rsync
-%patch5 -p1 -b .4338
-%patch6 -p1 -b .4337
-%patch7 -p1 -b .4337l
-%patch8 -p1 -b .man-rsyncable
-%patch9 -p1 -b .zless
 
 %build
 export DEFS="NO_ASM"
@@ -62,14 +46,14 @@ export CPPFLAGS="-DHAVE_LSTAT"
 export CC="%{__cc}"
 export CPP="%{__cpp}"
 export CXX="%{__cxx}"
-%configure 
+%configure
 
 make
 #make gzip.info
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-%makeinstall 
+%makeinstall
 
 gzip -9nf ${RPM_BUILD_ROOT}%{_infodir}/gzip.info*
 
@@ -107,6 +91,14 @@ fi
 %{profiledir}/*
 
 %changelog
+* Tue Apr 05 2016 Petr Stodulka <pstodulk@redhat.com> - 1.7-1
+- rebase to new upstream version 1.7
+- dropped all patches (almost all issues are fixed in new upstream version,
+  sometimes in different way)
+  - only patch gzip-1.3.12-openbsd-owl-tmp.patch is untested - code is changed
+    significantly and patch is undocumented from archaic time, so I drop it too
+  Resolves: #1321560
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.6-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
