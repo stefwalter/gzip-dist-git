@@ -1,6 +1,6 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.7
+Version: 1.8
 Release: 1%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
@@ -91,6 +91,10 @@ fi
 %{profiledir}/*
 
 %changelog
+* Fri Jul 01 2016 Petr Stodulka <pstodulk@redhat.com> - 1.8-1
+- rebase to v1.8
+- gzip -l no longer falsely reports a write error when writing to a pipe
+
 * Tue Apr 05 2016 Petr Stodulka <pstodulk@redhat.com> - 1.7-1
 - rebase to new upstream version 1.7
 - dropped all patches (almost all issues are fixed in new upstream version,
