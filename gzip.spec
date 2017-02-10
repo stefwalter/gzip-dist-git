@@ -1,7 +1,7 @@
 Summary: The GNU data compression program
 Name: gzip
 Version: 1.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
 Group: Applications/File
@@ -91,6 +91,9 @@ fi
 %{profiledir}/*
 
 %changelog
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.8-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Fri Jul 01 2016 Petr Stodulka <pstodulk@redhat.com> - 1.8-1
 - rebase to v1.8
 - gzip -l no longer falsely reports a write error when writing to a pipe
