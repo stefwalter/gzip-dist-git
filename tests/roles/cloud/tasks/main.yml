@@ -8,5 +8,5 @@
 - name: Run the local playbook in a launched instance
   qemu_playbook:
     subjects: "{{subjects}}"
-    playbook: "{{tests}}"
+    playbooks: "{{playbooks}}"
     log: "{{artifacts}}/machine.log"

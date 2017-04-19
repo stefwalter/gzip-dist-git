@@ -13,7 +13,7 @@ from ansible.module_utils.basic import *
 #
 # Test this module like this
 #
-# echo '{ "ANSIBLE_MODULE_ARGS": { "subjects": "cloud.qcow2", "playbook": "test/test_local.yml" } }' \
+# echo '{ "ANSIBLE_MODULE_ARGS": { "subjects": "cloud.qcow2", "playbooks": "test/test_local.yml" } }' \
 #        | python tests/library/qemu-playbook.py
 #
 
@@ -32,7 +32,7 @@ INVENTORY = "localhost ansible_ssh_port=2222 ansible_ssh_host=127.0.0.3 ansible_
 def main(argv):
     module = AnsibleModule(argument_spec = {
         "subjects": { "required": True, "type": "str" },
-        "playbook": { "required": True, "type": "str" },
+        "playbooks": { "required": True, "type": "str" },
         "log": { "required": False, "type": "str" },
     })
 
@@ -80,13 +80,23 @@ def main(argv):
             module.fail_json(msg="Couldn't connect to qemu host: {subjects}".format(**module.params))
             return 0
 
-        proc = subprocess.Popen(["/usr/bin/ansible-playbook", "-i", inventory,
-            module.params["playbook"]], stdin=null, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        cmd = [
+            "/usr/bin/ansible-playbook", "-i", inventory, "--skip-tags", "prepare",
+            "--extra-vars", "artifacts=/tmp/artifacts"
+        ]
+
+        playbooks = module.params["playbooks"]
+        if isinstance(playbooks, (list, tuple)):
+            cmd += playbooks
+        else:
+            cmd.append(playbooks)
+
+        proc = subprocess.Popen(cmd, stdin=null, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         output, error = proc.communicate()
 
         if os.getenv("FEDORA_TEST_DIAGNOSE"):
             tty = os.open("/dev/tty", os.O_RDWR)
-            os.write(tty, output + "\n\nDIAGNOSE: ssh -p 2222 root@127.0.0.3\n")
+            os.write(tty, output + "\n\nDIAGNOSE 'foobar': ssh -p 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@127.0.0.3\n")
             os.read(tty, 100)
     finally:
 
@@ -103,7 +113,7 @@ def main(argv):
         shutil.rmtree(directory)
         module.exit_json(changed=False)
     else:
-        module.fail_json(msg="The playbook failed on qemu host: {playbook}".format(**module.params))
+        module.fail_json(msg="The playbook failed on qemu host: {playbooks}".format(**module.params))
 
     return 0
 

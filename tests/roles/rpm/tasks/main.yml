@@ -2,6 +2,3 @@
 - name: Install the test subject RPMs
   package: name={{item}} state=latest
   with_items: "{{ subjects }}"
-
-- name: Run the local tests playbook
-  shell: ansible-playbook {{tests}}

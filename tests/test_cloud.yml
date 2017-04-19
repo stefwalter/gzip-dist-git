@@ -2,7 +2,7 @@
 - hosts: localhost
   vars:
     artifacts: ./artifacts
-    tests: ./test_local.yml
+    playbooks: ./test_local.yml
   vars_prompt:
   - name: subjects
     prompt: "Folder containing QCow2/raw test subject"
