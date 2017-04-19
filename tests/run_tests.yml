@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  remote_user: root
+  tasks:
+  - name: Install the requirements
+    package: name={{item}} state=latest
+    with_items:
+    - coreutils
+    - /sbin/install-info
+    - gzip
+ 
+  - name: Create the folder where we will store the tests
+    action: file state=directory path={{ item }}
+            owner=root group=root
+    with_items:
+    - /usr/libexec/tests/gzip/
+
+  - name: Install the test files
+    copy: src={{ item.file }} dest=/usr/libexec/tests/gzip/{{ item.dest }}
+           mode=0755
+    with_items:
+    - {file: test-simple, dest: test-simple }
+
+  - name: Execute the tests
+    shell: /usr/libexec/tests/gzip/test-simple 2>&1 | tee output

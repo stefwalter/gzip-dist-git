@@ -1,0 +1,12 @@
+#!/bin/sh
+set -ex
+
+# exercise installed gzip/gunzip programs
+echo "Bla" > bla.file
+cp bla.file bla.file.orig
+gzip bla.file
+gunzip bla.file.gz
+cmp bla.file bla.file.orig
+echo "hi"
+rm bla.file bla.file.orig
+

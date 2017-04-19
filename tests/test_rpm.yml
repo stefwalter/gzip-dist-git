@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  vars:
+    artifacts: ./artifacts
+    tests: ./test_local.yml
+  vars_prompt:
+  - name: subjects
+    prompt: "RPM test subject(s)"
+    private: no
+
+  roles:
+  - rpm
+

@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  vars:
+    artifacts: ./artifacts
+  tasks:
+  - block:
+    - name: Copy tests to target
+      copy:
+        src: ./
+        dest: /usr/local/bin/
+
+    - name: Execute test-simple
+      shell: /bin/sh -e /usr/local/bin/test-simple 1>>/tmp/test.log 2>&1
+
+    always:
+    - name: Pull out the logs
+      fetch:
+        dest: "{{artifacts}}/"
+        src: /tmp/test.log
+        flat: yes
