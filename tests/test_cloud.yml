@@ -9,4 +9,4 @@
     private: no
 
   roles:
-  - cloud
+  - standard-test-cloud
